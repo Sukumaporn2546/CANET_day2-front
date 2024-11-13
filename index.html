@@ -1,0 +1,31 @@
+<html>
+        <head>
+            <title>WebSocket Test</title>
+        </head>
+        <body>
+            <h1>WebSocket Test</h1>
+            <form action="" onsubmit="connect(event)">
+                <label>API Key:</label>
+                <input type="text" id="api_key" autocomplete="off"/>
+                <button>Connect</button>
+            </form>
+            <pre id="messages"></pre>
+            <script >
+                var ws;
+                function connect(event) {
+                    var apiKey = document.getElementById("api_key").value;
+                    ws = new WebSocket("ws://technest.ddns.net:8001/ws");
+                    ws.onopen = function(event) {
+                        ws.send(apiKey);
+                    };
+                    ws.onmessage = function(event) {
+                        var messages = document.getElementById("messages");
+                        var message = document.createElement("div");
+                        message.innerHTML = event.data;
+                        messages.appendChild(message);
+                    };
+                    event.preventDefault();
+                }
+            </script>
+        </body>
+    </html>
